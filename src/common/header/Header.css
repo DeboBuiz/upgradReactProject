@@ -1,0 +1,21 @@
+.header{
+    background-color: #222;
+    height: 36px;
+    padding: 8px 32px 8px 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo{
+    background-color: #ff7f7f;
+    height: 35px;
+
+    animation-name: rotate360;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate360 {
+    to {transform: rotate(360deg);}
+}
