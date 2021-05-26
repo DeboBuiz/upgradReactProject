@@ -16,6 +16,16 @@
     animation-iteration-count: infinite;
 }
 
+.formControl {
+    width: 240px;
+}
+
+.modal-content{
+    text-align: center;
+    padding: 50px;
+}
+
 @keyframes rotate360 {
     to {transform: rotate(360deg);}
 }
+

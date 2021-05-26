@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    width: 100%;
+}
+
+.left, .right{
+    width: 20%;
+    background-color: aqua;
+}
+
+.middle{
+    width: 60%;
+}
+
+.backButton{
+    margin-left: 24px !important;
+    margin-top: 8px !important;
+    margin-bottom: 0px !important;
+    height: 24px !important;
+    
+}
+
+.backButton a{
+    text-decoration: none !important;
+}

@@ -1,0 +1,30 @@
+.upcomingMoviesHeader{
+    background-color: #ff9999;
+    padding: 8px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.gridlist{
+    flex-wrap: nowrap !important;
+}
+
+.gridlistItem{
+    height: 250px !important;
+}
+
+.releasedMovies-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.releasedMoviesSection{
+    width: 76% !important;
+    margin: 16px !important;
+}
+
+.filterSection{
+    width: 24% !important;
+    margin: 16px !important;
+}
