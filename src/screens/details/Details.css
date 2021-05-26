@@ -5,11 +5,12 @@
 
 .left, .right{
     width: 20%;
-    background-color: aqua;
+    padding: 15px;
 }
 
 .middle{
     width: 60%;
+    padding: 15px;
 }
 
 .backButton{
@@ -22,4 +23,8 @@
 
 .backButton a{
     text-decoration: none !important;
+}
+
+.ratingStar:hover{
+    color: yellow !important;
 }

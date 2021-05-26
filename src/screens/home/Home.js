@@ -111,7 +111,7 @@ function Home(props) {
                             <Link to={"/detail/"+movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
                             <GridListTileBar
                                 title={movie.title}
-                                subtitle={"Release Date " + movie.release_date}
+                                subtitle={"Release Date " + (new Date(movie.release_date)).toDateString()}
                             />
                         </GridListTile>
                     ))}
