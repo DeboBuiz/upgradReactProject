@@ -10,6 +10,7 @@ export default function Details(props){
     //console.log(props)
     const movieId = props.match.params.movieId;
     const [movieDetail, setMovieDetail] = useState({})
+    const [videoId, setVideoId] = useState("");
     useEffect(()=>{
         fetch(props.baseUrl + "movies/"+movieId, {
             method: "GET",
@@ -22,6 +23,7 @@ export default function Details(props){
             .then((response) => {
                 //console.log(response.movies);
                 setMovieDetail(response);
+                setVideoId(response.trailer_url.split("v=")[1]);
             });
 
 
@@ -38,17 +40,13 @@ export default function Details(props){
     }
     const opts = {
         height: '390',
-        width: '640',
+        width: '100%',
         playerVars: {
           // https://developers.google.com/youtube/player_parameters
           autoplay: 1,
         },
       };
-      let video_id = movieDetail.trailer_url.split('v=')[1];
-      let ampersandPosition = video_id.indexOf('&');
-      if(ampersandPosition != -1) {
-        video_id = video_id.substring(0, ampersandPosition);
-      }
+
 
     return(
         <div>
@@ -81,7 +79,7 @@ export default function Details(props){
                 <Typography style={{marginTop: "16px"}}>
                     <b>Trailer: </b> 
                 </Typography>
-                <YouTube videoId={video_id} opts={opts} />
+                <YouTube videoId={videoId} opts={opts} /> 
             </div>
             <div className="right">Right</div>
 
