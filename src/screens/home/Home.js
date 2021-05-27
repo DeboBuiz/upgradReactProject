@@ -34,6 +34,13 @@ function Home(props) {
     const [fltrStartDate, setFltrStartDate] = useState("");
     const [fltrEndDate, setFltrEndDate] = useState("");
 
+    const applyFilter = ()=>{
+        let fltrMovies = releasedMovies.filter((movie)=>{
+         return movie.genres.some(value=>fltrGenres.includes(value))
+            
+        })
+        setReleasedMovies(fltrMovies);
+    }
 
     useEffect(() => {
         let dataMovies = null;
@@ -217,7 +224,7 @@ function Home(props) {
 
                         <Button
                             variant="contained"
-                            onClick={() => { }}
+                            onClick={applyFilter}
                             color="primary"
                             style={{ width: "100%" }}
                         >
