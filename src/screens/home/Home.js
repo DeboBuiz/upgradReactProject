@@ -25,6 +25,14 @@ function Home(props) {
     const [artistList, setArtistList] = useState([]);
     const [artist, setArtist] = useState("");
     const [checkedGenre, setCheckedGenre] = useState(false);
+    const [releasedMovies, setReleasedMovies] = useState([]);
+
+    //Filter States
+    const [fltrMovieName, setFltrMovieName] = useState("");
+    const [fltrGenres, setFltrGenres] = useState([]);
+    const [fltrArtists, setFltrArtists] = useState([]);
+    const [fltrStartDate, setFltrStartDate] = useState("");
+    const [fltrEndDate, setFltrEndDate] = useState("");
 
 
     useEffect(() => {
@@ -43,6 +51,19 @@ function Home(props) {
                 setMovieList(response.movies);
             });
 
+        fetch(props.baseUrl + "movies/?page=1&limit=10", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+            }
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                //console.log(response.movies);
+                setReleasedMovies(response.movies);
+            });
+
         fetch(props.baseUrl + "genres", {
             method: "GET",
             headers: {
@@ -50,10 +71,10 @@ function Home(props) {
                 "Cache-Control": "no-cache",
             }
         }).then((response) => response.json())
-        .then((response) => {
-            //console.log(response.movies);
-            setGenreList(response.genres);
-        });
+            .then((response) => {
+                //console.log(response.movies);
+                setGenreList(response.genres);
+            });
 
         fetch(props.baseUrl + "artists", {
             method: "GET",
@@ -62,18 +83,18 @@ function Home(props) {
                 "Cache-Control": "no-cache",
             }
         }).then((response) => response.json())
-        .then((response) => {
-            //console.log(response.movies);
-            setArtistList(response.artists);
-        });
+            .then((response) => {
+                //console.log(response.movies);
+                setArtistList(response.artists);
+            });
 
     }, [])
 
-    const genreChangeHandler = (event)=>{
+    const genreChangeHandler = (event) => {
         setGenre(event.target.value);
     }
 
-    const artistChangeHandler = (event)=>{
+    const artistChangeHandler = (event) => {
         setArtist(event.target.value);
     }
 
@@ -106,9 +127,9 @@ function Home(props) {
         return (
             <div>
                 <GridList cols={4}>
-                    {movieList.map((movie) => (
+                    {releasedMovies.map((movie) => (
                         <GridListTile key={movie.id} style={{ height: "350px" }}>
-                            <Link to={"/detail/"+movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
+                            <Link to={"/detail/" + movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
                             <GridListTileBar
                                 title={movie.title}
                                 subtitle={"Release Date " + (new Date(movie.release_date)).toDateString()}
@@ -121,7 +142,9 @@ function Home(props) {
     }
 
     const FilterMovies = () => {
-        
+        const filterApply = (event) => {
+
+        }
         return (
             <div>
                 <Card className="filterCard">
@@ -131,19 +154,19 @@ function Home(props) {
                         </Typography>
                         <br />
 
-                        
-                <FormControl  className="formControl">
-                    <InputLabel htmlFor="movieName">Movie Name</InputLabel>
-                    <Input id="movieName"  />                  
-                </FormControl>
-                <br /><br />
+                        <FormControl className="formControl">
+                            <TextField id="movieName" label="Movie Name" onChangeCapture={(e)=>setFltrMovieName(e.target.value)} value={fltrMovieName}/>
+                        </FormControl>
+                        <br /><br />
+
 
                         <FormControl className="formControl">
                             <InputLabel htmlFor="genre">Genres</InputLabel>
-                            <Select value={genre} onChange={genreChangeHandler} id="genre">
+                            <Select value={fltrGenres} onChange={(e)=>{setFltrGenres(e.target.value)}} id="genre" multiple renderValue={(selected) => selected.join(', ')}>
                                 {genreList.map((genreItem) => (
                                     <MenuItem key={"genre" + genreItem.id} value={genreItem.genre}>
-                                        <Checkbox checked={false} onChange={() => { }} /> {genreItem.genre}
+                                        <Checkbox checked={fltrGenres.indexOf(genreItem.genre) > -1} />
+                                        {genreItem.genre}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -153,10 +176,11 @@ function Home(props) {
 
                         <FormControl className="formControl">
                             <InputLabel htmlFor="artist">Artists</InputLabel>
-                            <Select value={artist} onChange={artistChangeHandler} id="artist">
+                            <Select value={fltrArtists} onChange={(e)=>{setFltrArtists(e.target.value)}} id="artist" multiple renderValue={(selected)=>selected.join(', ')}>
                                 {artistList.map((artistItem) => (
-                                    <MenuItem key={"artist" + artistItem.id} value={artistItem.first_name +" "+artistItem.last_name}>
-                                        <Checkbox checked={false} onChange={() => { }} /> {artistItem.first_name +" "+artistItem.last_name}
+                                    <MenuItem key={"artist" + artistItem.id} value={artistItem.first_name + " " + artistItem.last_name}>
+                                        <Checkbox checked={fltrArtists.indexOf(artistItem.first_name + " " + artistItem.last_name) > -1} /> 
+                                        {artistItem.first_name + " " + artistItem.last_name}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -169,7 +193,7 @@ function Home(props) {
                                 id="release-date-start"
                                 label="Release Date Start"
                                 type="date"
-                                defaultValue="dd-mm-yyyy"                                
+                                defaultValue="dd-mm-yyyy"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -182,7 +206,7 @@ function Home(props) {
                                 id="release-date-end"
                                 label="Release Date End"
                                 type="date"
-                                defaultValue="dd-mm-yyyy"                                
+                                defaultValue="dd-mm-yyyy"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -190,12 +214,12 @@ function Home(props) {
                         </FormControl>
                         <br /><br />
                         <br />
-                        
+
                         <Button
                             variant="contained"
-                            onClick={()=>{}}
+                            onClick={() => { }}
                             color="primary"
-                            style={{width: "100%"}}
+                            style={{ width: "100%" }}
                         >
                             APPLY
                         </Button>
