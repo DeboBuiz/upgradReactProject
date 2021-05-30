@@ -21,9 +21,7 @@ import { Link } from "react-router-dom";
 function Home(props) {
     const [movieList, setMovieList] = useState([]);
     const [genreList, setGenreList] = useState([]);
-    //const [genre, setGenre] = useState("");
     const [artistList, setArtistList] = useState([]);
-    //const [artist, setArtist] = useState("");
     const [filteredMovies, setFilteredMovies] = useState([]);
 
     //Filter States
@@ -46,8 +44,7 @@ function Home(props) {
         })
             .then((response) => response.json())
             .then((response) => {
-                //console.log(response.movies);
-                setFilteredMovies(response.movies);
+                  setFilteredMovies(response.movies);
             });
 
     }
@@ -62,7 +59,6 @@ function Home(props) {
         })
             .then((response) => response.json())
             .then((response) => {
-                //console.log(response.movies);
                 setMovieList(response.movies);
             });
 
@@ -75,8 +71,7 @@ function Home(props) {
         })
             .then((response) => response.json())
             .then((response) => {
-                //console.log(response.movies);
-                setFilteredMovies(response.movies);
+                 setFilteredMovies(response.movies);
             });
 
         fetch(props.baseUrl + "genres", {
@@ -87,7 +82,6 @@ function Home(props) {
             }
         }).then((response) => response.json())
             .then((response) => {
-                //console.log(response.movies);
                 setGenreList(response.genres);
             });
 
@@ -99,19 +93,10 @@ function Home(props) {
             }
         }).then((response) => response.json())
             .then((response) => {
-                //console.log(response.movies);
                 setArtistList(response.artists);
             });
 
     }, [])
-
-/*     const genreChangeHandler = (event) => {
-        setGenre(event.target.value);
-    }
-
-    const artistChangeHandler = (event) => {
-        setArtist(event.target.value);
-    } */
 
     const UpcomingMoviesHeader = () => {
         return (

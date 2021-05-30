@@ -71,7 +71,7 @@ export default function Register({baseUrl}){
             <FormControl required error={false} className="formControl">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input id="password" type="password" aria-describedby="password-text" onChange={(e)=>setPassword(e.target.value)} value={password} />
-                <FormHelperText error id="password-text">required</FormHelperText>
+                <FormHelperText id="password-text">required</FormHelperText>
             </FormControl>
             <br /><br />
 
