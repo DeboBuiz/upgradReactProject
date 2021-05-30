@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Typography from "@material-ui/core/Typography";
 import "./Header.css";
 import logoUrl from "../../assets/logo.svg"
 import Button from "@material-ui/core/Button";
 import Modal from 'react-modal'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Login from "../../screens/login/Login"
 import Register from "../../screens/register/Register"
 import { Link } from "react-router-dom";
@@ -18,6 +13,15 @@ const Header = (props) => {
     const bookshowButtonHandler = () => { }
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     //const [isDetailPage, setIsDetailPage]=useState(false);
+
+    useEffect(()=>{
+        if (localStorage.getItem("isLoggedIn") == "true"){
+            setIsLoggedIn(true);
+        }else{
+
+            setIsLoggedIn(false);
+        }
+    })
 
     const modalStyles = {
         content: {
@@ -48,11 +52,11 @@ const Header = (props) => {
         <div className="header">
             <img src={logoUrl} alt="logo" className="logo" />
             <div className="header-btn-group">
-                {props.isDetailPage && (<Link to={"/bookshow/" + props.movieId}><Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button></Link>)}
+                {props.isDetailPage && (<Link to={"/bookshow/" + props.movieId} style={{marginRight:"10px"}}><Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button></Link>)}
                 {
-                isLoggedIn 
-                && (<Button variant="contained" onClick={()=>{setIsLoggedIn(false)}} color="default" > Logout </Button>)
-                || (<Button variant="contained" onClick={() => { setIsModalOpen(true) }} color="default" > Login </Button>)
+                isLoggedIn ?
+                (<Button variant="contained" onClick={()=>{setIsLoggedIn(false); localStorage.setItem("isLoggedIn",false)}} color="default" > Logout </Button>)
+                : (<Button variant="contained" onClick={() => { setIsModalOpen(true) }} color="default" > Login </Button>)
                 }
         
             </div>

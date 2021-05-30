@@ -56,6 +56,7 @@ export default function Login({baseUrl, setIsLoggedIn, setIsModalOpen}){
 
                 <br /><br />
                 <Button
+                    type="submit"
                     variant="contained"
                     onClick={loginHandler}
                     color="primary"
