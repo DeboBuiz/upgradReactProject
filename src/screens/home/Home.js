@@ -21,11 +21,10 @@ import { Link } from "react-router-dom";
 function Home(props) {
     const [movieList, setMovieList] = useState([]);
     const [genreList, setGenreList] = useState([]);
-    const [genre, setGenre] = useState("");
+    //const [genre, setGenre] = useState("");
     const [artistList, setArtistList] = useState([]);
-    const [artist, setArtist] = useState("");
-    const [checkedGenre, setCheckedGenre] = useState(false);
-    const [releasedMovies, setReleasedMovies] = useState([]);
+    //const [artist, setArtist] = useState("");
+    const [filteredMovies, setFilteredMovies] = useState([]);
 
     //Filter States
     const [fltrMovieName, setFltrMovieName] = useState("");
@@ -34,25 +33,32 @@ function Home(props) {
     const [fltrStartDate, setFltrStartDate] = useState("");
     const [fltrEndDate, setFltrEndDate] = useState("");
 
-    localStorage.setItem("isDetailPage",false);
+    const applyFilter = ()=>{  
+        console.log(fltrStartDate)   
+        let filterString = "title="+fltrMovieName+"&start_date="+fltrStartDate+"&end_date="+fltrEndDate+"&genre="+fltrGenres.join()+"&artists="+fltrArtists.join()
 
-    const applyFilter = ()=>{
-        let fltrMovies = releasedMovies.filter((movie)=>{
-         return movie.genres.some(value=>fltrGenres.includes(value))
-            
+        fetch(props.baseUrl + "movies/?limit=20&"+filterString, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+            },
         })
-        setReleasedMovies(fltrMovies);
+            .then((response) => response.json())
+            .then((response) => {
+                //console.log(response.movies);
+                setFilteredMovies(response.movies);
+            });
+
     }
 
     useEffect(() => {
-        let dataMovies = null;
         fetch(props.baseUrl + "movies/?page=1&limit=6", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Cache-Control": "no-cache",
             },
-            body: dataMovies,
         })
             .then((response) => response.json())
             .then((response) => {
@@ -60,7 +66,7 @@ function Home(props) {
                 setMovieList(response.movies);
             });
 
-        fetch(props.baseUrl + "movies/?page=1&limit=10", {
+        fetch(props.baseUrl + "movies/?limit=20", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +76,7 @@ function Home(props) {
             .then((response) => response.json())
             .then((response) => {
                 //console.log(response.movies);
-                setReleasedMovies(response.movies);
+                setFilteredMovies(response.movies);
             });
 
         fetch(props.baseUrl + "genres", {
@@ -99,13 +105,13 @@ function Home(props) {
 
     }, [])
 
-    const genreChangeHandler = (event) => {
+/*     const genreChangeHandler = (event) => {
         setGenre(event.target.value);
     }
 
     const artistChangeHandler = (event) => {
         setArtist(event.target.value);
-    }
+    } */
 
     const UpcomingMoviesHeader = () => {
         return (
@@ -136,7 +142,7 @@ function Home(props) {
         return (
             <div>
                 <GridList cols={4}>
-                    {releasedMovies.map((movie) => (
+                    {filteredMovies.map((movie) => (
                         <GridListTile key={movie.id} style={{ height: "350px" }}>
                             <Link to={"/movie/" + movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
                             <GridListTileBar
@@ -204,8 +210,8 @@ function Home(props) {
                             <TextField
                                 id="release-date-start"
                                 label="Release Date Start"
-                                type="date"
-                                defaultValue="dd-mm-yyyy"
+                                type="date" 
+                                onChange={e=>setFltrStartDate(e.target.value)}                               
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -218,7 +224,7 @@ function Home(props) {
                                 id="release-date-end"
                                 label="Release Date End"
                                 type="date"
-                                defaultValue="dd-mm-yyyy"
+                                onChange={e=>{setFltrEndDate(e.target.value)}}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -229,7 +235,7 @@ function Home(props) {
 
                         <Button
                             variant="contained"
-                            onClick={()=>{}}
+                            onClick={applyFilter}
                             color="primary"
                             style={{ width: "100%" }}
                         >
