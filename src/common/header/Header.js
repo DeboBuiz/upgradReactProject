@@ -12,6 +12,7 @@ import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Login from "../../screens/login/Login"
 import Register from "../../screens/register/Register"
+import { Link } from "react-router-dom";
 
 const Header = (props) => {
     const bookshowButtonHandler = () => { }
@@ -47,7 +48,7 @@ const Header = (props) => {
         <div className="header">
             <img src={logoUrl} alt="logo" className="logo" />
             <div className="header-btn-group">
-                {props.isDetailPage && (<Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button>)}
+                {props.isDetailPage && (<Link to={"/bookshow/" + props.movieId}><Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button></Link>)}
                 {
                 isLoggedIn 
                 && (<Button variant="contained" onClick={()=>{setIsLoggedIn(false)}} color="default" > Logout </Button>)

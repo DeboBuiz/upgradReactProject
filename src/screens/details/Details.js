@@ -58,7 +58,7 @@ export default function Details(props){
 
     return(
         <div>
-        <Header baseUrl={props.baseUrl} isDetailPage={true} />
+        <Header baseUrl={props.baseUrl} isDetailPage={true} movieId={movieId}/>
         <BackButton/>
         <div className="container">
             <div className="left">

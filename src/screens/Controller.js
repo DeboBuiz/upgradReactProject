@@ -17,7 +17,8 @@ function Controller(){
             <Switch>
             
             <Route exact path="/" render={(props) => (<Home {...props} baseUrl={baseUrl} />)} />
-            <Route path="/detail/:movieId" render={(props) => (<Details {...props} baseUrl={baseUrl} />)} />
+            <Route path="/movie/:movieId" render={(props) => (<Details {...props} baseUrl={baseUrl} />)} />
+            <Route path="/bookshow/:id" render={(props) => (<BookShow {...props} baseUrl={baseUrl} />)} />
             </Switch>
 
                 

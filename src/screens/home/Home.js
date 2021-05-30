@@ -138,7 +138,7 @@ function Home(props) {
                 <GridList cols={4}>
                     {releasedMovies.map((movie) => (
                         <GridListTile key={movie.id} style={{ height: "350px" }}>
-                            <Link to={"/detail/" + movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
+                            <Link to={"/movie/" + movie.id}><img src={movie.poster_url} alt={movie.title} style={{ height: "350px", width: "100%" }} /></Link>
                             <GridListTileBar
                                 title={movie.title}
                                 subtitle={"Release Date " + (new Date(movie.release_date)).toDateString()}
