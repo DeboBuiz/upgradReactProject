@@ -10,12 +10,13 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
-
-
+import Login from "../../screens/login/Login"
+import Register from "../../screens/register/Register"
 
 const Header = (props) => {
     const bookshowButtonHandler = () => { }
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const modalStyles = {
         content: {
             top: '50%',
@@ -46,96 +47,12 @@ const Header = (props) => {
 
     }
 
-    const modalLoginBtnHandler = () => {
-        setIsLoggedIn(true);
-        setIsModalOpen(false);
-     }
-    const LoginForm = () => {
-        return (
-            <div className="modal-content">
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="username">Username</InputLabel>
-                    <Input id="username" aria-describedby="username-text" />
-                    <FormHelperText id="username-text"></FormHelperText>
-                </FormControl>
-                <br /><br />
-
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input id="password" type="password" aria-describedby="password-text" />
-                    <FormHelperText id="password-text"></FormHelperText>
-                </FormControl>
-
-                <br /><br />
-                <Button
-                    variant="contained"
-                    onClick={modalLoginBtnHandler}
-                    color="primary"
-                >
-                    Login
-            </Button>
-            </div>
-
-
-        )
-    }
-
-
-    const modalRegisterBtnHandler = () => { }
-    const RegisterForm = () => {
-        return (
-            <div className="modal-content">
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="firstname">First Name</InputLabel>
-                    <Input id="firstname" aria-describedby="firstname-text" />
-                    <FormHelperText id="firstname-text">required</FormHelperText>
-                </FormControl>
-                <br /><br />
-
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="lastname">Last Name</InputLabel>
-                    <Input id="lastname" aria-describedby="lastname-text" />
-                    <FormHelperText id="lastname-text">required</FormHelperText>
-                </FormControl>
-                <br /><br />
-
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="email">Email</InputLabel>
-                    <Input id="email" aria-describedby="email-text" />
-                    <FormHelperText id="email-text">required</FormHelperText>
-                </FormControl>
-                <br /><br />
-
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input id="password" type="password" aria-describedby="password-text" />
-                    <FormHelperText error id="password-text">required</FormHelperText>
-                </FormControl>
-                <br /><br />
-
-                <FormControl required error={false} className="formControl">
-                    <InputLabel htmlFor="contact">Contact No</InputLabel>
-                    <Input id="contact" aria-describedby="contact-text" />
-                    <FormHelperText id="contact-text">required</FormHelperText>
-                </FormControl>
-                <br /><br />
-                <p>Registration Successful. Please Login</p>
-                <Button
-                    variant="contained"
-                    onClick={modalRegisterBtnHandler}
-                    color="primary"
-                >
-                    Register
-            </Button>
-            </div>
-        )
-    }
-
+ 
     const LoginControl = (props) => {
         if (props.action === "Register") {
-            return <RegisterForm />
+            return <Register baseUrl={props.baseUrl}/>
         }
-        return <LoginForm />
+        return <Login baseUrl={props.baseUrl}  setIsLoggedIn={setIsLoggedIn} setIsModalOpen={setIsModalOpen}/>
     }
 
     return (
@@ -149,7 +66,7 @@ const Header = (props) => {
                     <Tab label="Login" onClick={() => { setLoginAction("Login") }} />
                     <Tab label="Register" onClick={() => { setLoginAction("Register") }} />
                 </Tabs>
-                <LoginControl action={loginAction} />
+                <LoginControl action={loginAction} baseUrl={props.baseUrl} />
 
             </Modal>
         </div>

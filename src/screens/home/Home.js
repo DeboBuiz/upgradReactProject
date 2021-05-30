@@ -148,12 +148,14 @@ function Home(props) {
         )
     }
 
-    const FilterMovies = () => {
-        const filterApply = (event) => {
-
-        }
-        return (
-            <div>
+    return (
+        <div>
+            <UpcomingMoviesHeader />
+            <HorizontalMoviesListScrollBar />
+            <div className="releasedMovies-container">
+                <ReleasedMovies className="releasedMoviesSection" />
+                
+                <div className="filterSection">
                 <Card className="filterCard">
                     <CardContent>
                         <Typography variant="headline" component="h2" color="primary" >
@@ -224,7 +226,7 @@ function Home(props) {
 
                         <Button
                             variant="contained"
-                            onClick={applyFilter}
+                            onClick={()=>{}}
                             color="primary"
                             style={{ width: "100%" }}
                         >
@@ -233,16 +235,6 @@ function Home(props) {
                     </CardContent>
                 </Card>
             </div>
-        )
-    }
-
-    return (
-        <div>
-            <UpcomingMoviesHeader />
-            <HorizontalMoviesListScrollBar />
-            <div className="releasedMovies-container">
-                <ReleasedMovies className="releasedMoviesSection" />
-                <FilterMovies className="filterSection" />
             </div>
 
         </div>
