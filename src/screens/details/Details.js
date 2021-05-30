@@ -13,6 +13,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 export default function Details(props){
     //console.log(props)
+
     const movieId = props.match.params.movieId;
     const [movieDetail, setMovieDetail] = useState({})
     const [artists, setArtists] = useState([]);
@@ -57,6 +58,7 @@ export default function Details(props){
 
     return(
         <div>
+        <Header baseUrl={props.baseUrl} isDetailPage={true} />
         <BackButton/>
         <div className="container">
             <div className="left">

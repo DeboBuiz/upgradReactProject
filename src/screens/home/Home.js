@@ -34,6 +34,8 @@ function Home(props) {
     const [fltrStartDate, setFltrStartDate] = useState("");
     const [fltrEndDate, setFltrEndDate] = useState("");
 
+    localStorage.setItem("isDetailPage",false);
+
     const applyFilter = ()=>{
         let fltrMovies = releasedMovies.filter((movie)=>{
          return movie.genres.some(value=>fltrGenres.includes(value))
@@ -150,6 +152,7 @@ function Home(props) {
 
     return (
         <div>
+            <Header baseUrl={props.baseUrl} isDetailPage={false} />
             <UpcomingMoviesHeader />
             <HorizontalMoviesListScrollBar />
             <div className="releasedMovies-container">

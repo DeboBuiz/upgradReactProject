@@ -16,6 +16,7 @@ import Register from "../../screens/register/Register"
 const Header = (props) => {
     const bookshowButtonHandler = () => { }
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    //const [isDetailPage, setIsDetailPage]=useState(false);
 
     const modalStyles = {
         content: {
@@ -34,20 +35,7 @@ const Header = (props) => {
     const [loginAction, setLoginAction] = useState("Login");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const RenderHeaderButtonGroup = () => {
-        if (isLoggedIn) {
-            return (
-                <div>
-                    <Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button>
-                    <Button variant="contained" onClick={()=>{setIsLoggedIn(false)}} color="default" > Logout </Button>
-                </div>
-            )
-        }
-        return <Button variant="contained" onClick={() => { setIsModalOpen(true) }} color="default" > Login </Button>
 
-    }
-
- 
     const LoginControl = (props) => {
         if (props.action === "Register") {
             return <Register baseUrl={props.baseUrl}/>
@@ -59,7 +47,13 @@ const Header = (props) => {
         <div className="header">
             <img src={logoUrl} alt="logo" className="logo" />
             <div className="header-btn-group">
-                <RenderHeaderButtonGroup />
+                {props.isDetailPage && (<Button variant="contained" onClick={bookshowButtonHandler} color="primary"> Book Show </Button>)}
+                {
+                isLoggedIn 
+                && (<Button variant="contained" onClick={()=>{setIsLoggedIn(false)}} color="default" > Logout </Button>)
+                || (<Button variant="contained" onClick={() => { setIsModalOpen(true) }} color="default" > Login </Button>)
+                }
+        
             </div>
             <Modal isOpen={isModalOpen} style={modalStyles}>
                 <Tabs value={tabValue} onChange={tabChangeHandler} aria-label="Login / Register Tabs">
